@@ -1,47 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useMemo, useState } from 'react';
 import './App.css';
+import { RouterProvider } from 'react-router-dom';
+import { createAppRouter } from './router';
+import NavBar from './components/NavBar';
+import { supabaseMissingConfig } from './services/supabaseClient';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * App
+ * Root component: renders the NavBar and RouterProvider.
+ * Shows a non-blocking configuration banner if Supabase envs are missing.
+ */
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  const router = useMemo(() => createAppRouter(), []);
+  const [showConfigBanner, setShowConfigBanner] = useState(supabaseMissingConfig);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {showConfigBanner && (
+        <div className="config-banner" role="region" aria-label="Configuration missing">
+          <div className="container config-banner__inner">
+            <span>
+              Supabase configuration is missing. Set REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_KEY in your environment to enable data.
+            </span>
+            <button className="btn btn-secondary" onClick={() => setShowConfigBanner(false)} aria-label="Dismiss configuration message">
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+      <NavBar />
+      <main className="app-main">
+        <RouterProvider router={router} />
+      </main>
     </div>
   );
 }
