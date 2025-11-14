@@ -76,7 +76,7 @@ export default function ResidentDetailPage() {
 
   return (
     <div className="container">
-      <Link className="back-link" to=" /">← Back to Directory</Link>
+      <Link className="back-link" to="/">← Back to Directory</Link>
       <div className="detail-card" style={{ marginTop: 12 }}>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
           <div

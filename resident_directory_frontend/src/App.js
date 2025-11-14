@@ -3,6 +3,7 @@ import './App.css';
 import { RouterProvider } from 'react-router-dom';
 import { createAppRouter } from './router';
 import NavBar from './components/NavBar';
+import SearchBar from './components/SearchBar';
 import { supabaseMissingConfig } from './services/supabaseClient';
 
 /**
@@ -14,6 +15,8 @@ import { supabaseMissingConfig } from './services/supabaseClient';
 function App() {
   const router = useMemo(() => createAppRouter(), []);
   const [showConfigBanner, setShowConfigBanner] = useState(supabaseMissingConfig);
+
+  const [globalSearch, setGlobalSearch] = useState('');
 
   return (
     <div className="App">
@@ -29,7 +32,18 @@ function App() {
           </div>
         </div>
       )}
-      <NavBar />
+
+      <NavBar
+        centerContent={
+          <SearchBar
+            value={globalSearch}
+            onChange={setGlobalSearch}
+            onClear={() => setGlobalSearch('')}
+            ariaLabel="Search residents"
+          />
+        }
+      />
+
       <main className="app-main">
         <RouterProvider router={router} />
       </main>

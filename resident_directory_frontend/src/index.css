@@ -2,15 +2,30 @@
   --color-primary: #2563EB;
   --color-secondary: #F59E0B;
   --color-error: #EF4444;
+
+  /* Light theme (default) */
   --color-bg: #f9fafb;
   --color-surface: #ffffff;
   --color-text: #111827;
   --color-muted: #6B7280;
+
   --ring: 0 0 0 3px rgba(37, 99, 235, 0.3);
   --radius: 12px;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
   --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
   --shadow-lg: 0 10px 25px rgba(0,0,0,0.10);
+}
+
+/* Dark theme variables applied when NavBar sets data-theme="dark" on <html> */
+:root[data-theme="dark"] {
+  --color-bg: #0b1220;        /* deep navy */
+  --color-surface: #0f172a;   /* slate-900-ish */
+  --color-text: #e5e7eb;      /* gray-200 */
+  --color-muted: #94a3b8;     /* slate-400 */
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
+  --shadow-md: 0 4px 10px rgba(0,0,0,0.45);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.55);
 }
 
 *,
